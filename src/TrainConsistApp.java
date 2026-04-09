@@ -31,7 +31,6 @@ public class TrainConsistApp {
         System.out.println("\n--- UC3: Unique Bogie IDs ---");
 
         Set<String> bogieIDs = new HashSet<>();
-
         bogieIDs.add("B1");
         bogieIDs.add("B2");
         bogieIDs.add("B3");
@@ -39,12 +38,11 @@ public class TrainConsistApp {
 
         System.out.println("Unique Bogie IDs: " + bogieIDs);
 
-        // ===== UC4: LinkedList Operations =====
+        // ===== UC4: LinkedList =====
         System.out.println("\n--- UC4: Train Consist using LinkedList ---");
 
         LinkedList<String> train = new LinkedList<>();
 
-        // Add bogies
         train.add("Engine");
         train.add("Sleeper");
         train.add("AC");
@@ -53,17 +51,30 @@ public class TrainConsistApp {
 
         System.out.println("Initial train: " + train);
 
-        // Insert Pantry Car at position 2
         train.add(2, "Pantry Car");
-
         System.out.println("After adding Pantry Car: " + train);
 
-        // Remove first and last bogie
         train.removeFirst();
         train.removeLast();
 
-        // Final train
         System.out.println("Final train consist: " + train);
+
+        // ===== UC5: LinkedHashSet (Ordered + Unique) =====
+        System.out.println("\n--- UC5: Ordered Unique Train Formation ---");
+
+        LinkedHashSet<String> formation = new LinkedHashSet<>();
+
+        // Add bogies
+        formation.add("Engine");
+        formation.add("Sleeper");
+        formation.add("Cargo");
+        formation.add("Guard");
+
+        // Add duplicate
+        formation.add("Sleeper"); // ignored
+
+        // Display final formation
+        System.out.println("Final Train Formation: " + formation);
 
         System.out.println("\nProgram continues...");
     }
