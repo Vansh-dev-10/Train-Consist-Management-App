@@ -159,6 +159,41 @@ public class TrainConsistApp {
         } else {
             System.out.println("Train is NOT SAFE ❌");
         }
+        // ===== UC13 =====
+        System.out.println("\n=== UC13: Loop vs Stream Performance Comparison ===");
+
+// Create dataset
+        List<Bogie> performanceList = new ArrayList<>();
+        for (int i = 0; i < 100000; i++) {
+            performanceList.add(new Bogie("Bogie" + i, i % 100));
+        }
+
+// ----- Loop-based filtering -----
+        long startLoop = System.nanoTime();
+
+        List<Bogie> loopResult = new ArrayList<>();
+        for (Bogie b : performanceList) {
+            if (b.capacity > 50) {
+                loopResult.add(b);
+            }
+        }
+
+        long endLoop = System.nanoTime();
+        long loopTime = endLoop - startLoop;
+
+// ----- Stream-based filtering -----
+        long startStream = System.nanoTime();
+
+        List<Bogie> streamResult = performanceList.stream()
+                .filter(b -> b.capacity > 50)
+                .collect(Collectors.toList());
+
+        long endStream = System.nanoTime();
+        long streamTime = endStream - startStream;
+
+// Output
+        System.out.println("Loop Execution Time (ns): " + loopTime);
+        System.out.println("Stream Execution Time (ns): " + streamTime);
         System.out.println("\n=== END OF PROGRAM ===");
     }
 }
