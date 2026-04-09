@@ -1,16 +1,15 @@
 import java.util.*;
+import java.util.stream.Collectors;
 
 class Bogie {
     String name;
     int capacity;
 
-    // Constructor
     Bogie(String name, int capacity) {
         this.name = name;
         this.capacity = capacity;
     }
 
-    // toString for printing
     public String toString() {
         return name + " (Capacity: " + capacity + ")";
     }
@@ -20,9 +19,8 @@ public class TrainConsistApp {
 
     public static void main(String[] args) {
 
-        // ===== UC1: Initialization =====
+        // ===== UC1 =====
         System.out.println("=== Train Consist Management App ===");
-
         List<String> trainConsist = new ArrayList<>();
         System.out.println("Initial bogie count: " + trainConsist.size());
 
@@ -55,7 +53,6 @@ public class TrainConsistApp {
         formation.add("Sleeper");
         formation.add("Cargo");
         formation.add("Guard");
-        formation.add("Sleeper");
 
         // ===== UC6 =====
         HashMap<String, Integer> capacityMap = new HashMap<>();
@@ -63,21 +60,24 @@ public class TrainConsistApp {
         capacityMap.put("AC Chair", 60);
         capacityMap.put("First Class", 40);
 
-        // ===== UC7: Comparator Sorting =====
-        System.out.println("\n--- UC7: Sort Bogies by Capacity ---");
-
+        // ===== UC7 =====
         List<Bogie> bogieList = new ArrayList<>();
-
-        // Add bogie objects
         bogieList.add(new Bogie("Sleeper", 72));
         bogieList.add(new Bogie("AC Chair", 60));
         bogieList.add(new Bogie("First Class", 40));
 
-        // Sort using Comparator + Lambda
         bogieList.sort(Comparator.comparingInt(b -> b.capacity));
 
-        // Display sorted bogies
-        for (Bogie b : bogieList) {
+        // ===== UC8: Stream Filtering =====
+        System.out.println("\n--- UC8: Filter Bogies (Capacity > 60) ---");
+
+        List<Bogie> filteredBogies = bogieList
+                .stream()                       // convert to stream
+                .filter(b -> b.capacity > 60)  // condition
+                .collect(Collectors.toList()); // collect to list
+
+        // Display filtered bogies
+        for (Bogie b : filteredBogies) {
             System.out.println(b);
         }
 
