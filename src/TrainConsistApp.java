@@ -1,5 +1,6 @@
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.regex.*;
 
 class Bogie {
     String name;
@@ -30,98 +31,104 @@ public class TrainConsistApp {
         trainConsist.add("AC Chair");
         trainConsist.add("First Class");
         System.out.println("After adding: " + trainConsist);
-
         trainConsist.remove("AC Chair");
         System.out.println("After removal: " + trainConsist);
-
         System.out.println("Contains Sleeper? " + trainConsist.contains("Sleeper"));
 
         // ===== UC3 =====
-        System.out.println("\n=== UC3: HashSet (Unique IDs) ===");
+        System.out.println("\n=== UC3: HashSet ===");
         Set<String> bogieIDs = new HashSet<>();
         bogieIDs.add("B1");
         bogieIDs.add("B2");
-        bogieIDs.add("B3");
-        bogieIDs.add("B1"); // duplicate
-        System.out.println("Unique Bogie IDs: " + bogieIDs);
+        bogieIDs.add("B1");
+        System.out.println("Unique IDs: " + bogieIDs);
 
         // ===== UC4 =====
-        System.out.println("\n=== UC4: LinkedList Operations ===");
+        System.out.println("\n=== UC4: LinkedList ===");
         LinkedList<String> train = new LinkedList<>();
         train.add("Engine");
         train.add("Sleeper");
         train.add("AC");
         train.add("Cargo");
         train.add("Guard");
-
-        System.out.println("Initial train: " + train);
-
         train.add(2, "Pantry Car");
-        System.out.println("After insertion: " + train);
-
         train.removeFirst();
         train.removeLast();
-        System.out.println("After removing first & last: " + train);
+        System.out.println("Train: " + train);
 
         // ===== UC5 =====
-        System.out.println("\n=== UC5: LinkedHashSet (Ordered Unique) ===");
+        System.out.println("\n=== UC5: LinkedHashSet ===");
         LinkedHashSet<String> formation = new LinkedHashSet<>();
         formation.add("Engine");
         formation.add("Sleeper");
         formation.add("Cargo");
         formation.add("Guard");
-        formation.add("Sleeper"); // duplicate
-
-        System.out.println("Final Formation: " + formation);
+        formation.add("Sleeper");
+        System.out.println("Formation: " + formation);
 
         // ===== UC6 =====
-        System.out.println("\n=== UC6: HashMap (Bogie Capacity) ===");
+        System.out.println("\n=== UC6: HashMap ===");
         HashMap<String, Integer> capacityMap = new HashMap<>();
         capacityMap.put("Sleeper", 72);
         capacityMap.put("AC Chair", 60);
         capacityMap.put("First Class", 40);
-
-        for (Map.Entry<String, Integer> entry : capacityMap.entrySet()) {
-            System.out.println(entry.getKey() + " -> " + entry.getValue());
-        }
+        capacityMap.forEach((k, v) -> System.out.println(k + " -> " + v));
 
         // ===== UC7 =====
-        System.out.println("\n=== UC7: Sorting using Comparator ===");
+        System.out.println("\n=== UC7: Sorting ===");
         List<Bogie> bogieList = new ArrayList<>();
         bogieList.add(new Bogie("Sleeper", 72));
         bogieList.add(new Bogie("AC Chair", 60));
         bogieList.add(new Bogie("First Class", 40));
-
         bogieList.sort(Comparator.comparingInt(b -> b.capacity));
-
-        for (Bogie b : bogieList) {
-            System.out.println(b);
-        }
+        bogieList.forEach(System.out::println);
 
         // ===== UC8 =====
-        System.out.println("\n=== UC8: Stream Filter (capacity > 60) ===");
+        System.out.println("\n=== UC8: Filter ===");
         List<Bogie> filtered = bogieList.stream()
                 .filter(b -> b.capacity > 60)
                 .collect(Collectors.toList());
-
         filtered.forEach(System.out::println);
 
         // ===== UC9 =====
-        System.out.println("\n=== UC9: Grouping Bogies ===");
+        System.out.println("\n=== UC9: Grouping ===");
         Map<String, List<Bogie>> grouped = bogieList.stream()
                 .collect(Collectors.groupingBy(b -> b.name));
-
-        for (Map.Entry<String, List<Bogie>> entry : grouped.entrySet()) {
-            System.out.println(entry.getKey() + " -> " + entry.getValue());
-        }
+        grouped.forEach((k, v) -> System.out.println(k + " -> " + v));
 
         // ===== UC10 =====
         System.out.println("\n=== UC10: Total Capacity ===");
         int total = bogieList.stream()
                 .map(b -> b.capacity)
                 .reduce(0, Integer::sum);
+        System.out.println("Total Capacity: " + total);
 
-        System.out.println("Total Seating Capacity: " + total);
+        // ===== UC11: Regex Validation =====
+        System.out.println("\n=== UC11: Regex Validation ===");
+
+        String trainID = "TRN-1234";      // change to test
+        String cargoCode = "PET-AB";      // change to test
+
+        // Define regex
+        Pattern trainPattern = Pattern.compile("TRN-\\d{4}");
+        Pattern cargoPattern = Pattern.compile("PET-[A-Z]{2}");
+
+        // Match input
+        Matcher trainMatcher = trainPattern.matcher(trainID);
+        Matcher cargoMatcher = cargoPattern.matcher(cargoCode);
+
+        // Validate
+        if (trainMatcher.matches()) {
+            System.out.println("Valid Train ID: " + trainID);
+        } else {
+            System.out.println("Invalid Train ID: " + trainID);
+        }
+
+        if (cargoMatcher.matches()) {
+            System.out.println("Valid Cargo Code: " + cargoCode);
+        } else {
+            System.out.println("Invalid Cargo Code: " + cargoCode);
+        }
 
         System.out.println("\n=== END OF PROGRAM ===");
     }
