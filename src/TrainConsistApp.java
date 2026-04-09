@@ -15,7 +15,17 @@ class Bogie {
         return name + " (Capacity: " + capacity + ")";
     }
 }
-
+class GoodsBogie {
+    String type;
+    String cargo;
+    GoodsBogie(String type, String cargo) {
+        this.type = type;
+        this.cargo = cargo;
+    }
+    public String toString() {
+        return type + " -> " + cargo;
+    }
+}
 public class TrainConsistApp {
 
     public static void main(String[] args) {
@@ -129,7 +139,26 @@ public class TrainConsistApp {
         } else {
             System.out.println("Invalid Cargo Code: " + cargoCode);
         }
-
+        // ===== UC12: Safety Validation =====
+        System.out.println("\n=== UC12: Safety Validation ===");
+        List<GoodsBogie> goodsList = new ArrayList<>();
+        goodsList.add(new GoodsBogie("Cylindrical", "Petroleum"));
+        goodsList.add(new GoodsBogie("Box", "Coal"));
+        goodsList.add(new GoodsBogie("Flat", "Steel"));
+        // Rule:
+        // Cylindrical → only Petroleum allowed
+        boolean isSafe = goodsList.stream()
+                .allMatch(b ->
+                        (b.type.equals("Cylindrical") && b.cargo.equals("Petroleum"))
+                                || (!b.type.equals("Cylindrical"))
+                );
+        // Display result
+        goodsList.forEach(System.out::println);
+        if (isSafe) {
+            System.out.println("Train is SAFETY COMPLIANT ✅");
+        } else {
+            System.out.println("Train is NOT SAFE ❌");
+        }
         System.out.println("\n=== END OF PROGRAM ===");
     }
 }
