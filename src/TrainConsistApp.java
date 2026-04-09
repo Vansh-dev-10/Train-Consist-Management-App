@@ -1,5 +1,21 @@
 import java.util.*;
 
+class Bogie {
+    String name;
+    int capacity;
+
+    // Constructor
+    Bogie(String name, int capacity) {
+        this.name = name;
+        this.capacity = capacity;
+    }
+
+    // toString for printing
+    public String toString() {
+        return name + " (Capacity: " + capacity + ")";
+    }
+}
+
 public class TrainConsistApp {
 
     public static void main(String[] args) {
@@ -10,75 +26,59 @@ public class TrainConsistApp {
         List<String> trainConsist = new ArrayList<>();
         System.out.println("Initial bogie count: " + trainConsist.size());
 
-        // ===== UC2: ArrayList Operations =====
-        System.out.println("\n--- UC2: Bogie Operations ---");
-
+        // ===== UC2 =====
         trainConsist.add("Sleeper");
         trainConsist.add("AC Chair");
         trainConsist.add("First Class");
-
-        System.out.println("Bogies after addition: " + trainConsist);
-
         trainConsist.remove("AC Chair");
 
-        if (trainConsist.contains("Sleeper")) {
-            System.out.println("Sleeper bogie exists.");
-        }
-
-        System.out.println("Final bogie list: " + trainConsist);
-
-        // ===== UC3: HashSet =====
-        System.out.println("\n--- UC3: Unique Bogie IDs ---");
-
+        // ===== UC3 =====
         Set<String> bogieIDs = new HashSet<>();
         bogieIDs.add("B1");
         bogieIDs.add("B2");
-        bogieIDs.add("B3");
         bogieIDs.add("B1");
 
-        System.out.println("Unique Bogie IDs: " + bogieIDs);
-
-        // ===== UC4: LinkedList =====
-        System.out.println("\n--- UC4: LinkedList Train ---");
-
+        // ===== UC4 =====
         LinkedList<String> train = new LinkedList<>();
         train.add("Engine");
         train.add("Sleeper");
         train.add("AC");
         train.add("Cargo");
         train.add("Guard");
-
         train.add(2, "Pantry Car");
         train.removeFirst();
         train.removeLast();
 
-        System.out.println("Final train consist: " + train);
-
-        // ===== UC5: LinkedHashSet =====
-        System.out.println("\n--- UC5: Ordered Unique Formation ---");
-
+        // ===== UC5 =====
         LinkedHashSet<String> formation = new LinkedHashSet<>();
         formation.add("Engine");
         formation.add("Sleeper");
         formation.add("Cargo");
         formation.add("Guard");
-        formation.add("Sleeper"); // duplicate
+        formation.add("Sleeper");
 
-        System.out.println("Final Train Formation: " + formation);
-
-        // ===== UC6: HashMap =====
-        System.out.println("\n--- UC6: Bogie Capacity Mapping ---");
-
+        // ===== UC6 =====
         HashMap<String, Integer> capacityMap = new HashMap<>();
-
-        // Add bogie-capacity pairs
         capacityMap.put("Sleeper", 72);
         capacityMap.put("AC Chair", 60);
         capacityMap.put("First Class", 40);
 
-        // Display using entrySet
-        for (Map.Entry<String, Integer> entry : capacityMap.entrySet()) {
-            System.out.println(entry.getKey() + " -> Capacity: " + entry.getValue());
+        // ===== UC7: Comparator Sorting =====
+        System.out.println("\n--- UC7: Sort Bogies by Capacity ---");
+
+        List<Bogie> bogieList = new ArrayList<>();
+
+        // Add bogie objects
+        bogieList.add(new Bogie("Sleeper", 72));
+        bogieList.add(new Bogie("AC Chair", 60));
+        bogieList.add(new Bogie("First Class", 40));
+
+        // Sort using Comparator + Lambda
+        bogieList.sort(Comparator.comparingInt(b -> b.capacity));
+
+        // Display sorted bogies
+        for (Bogie b : bogieList) {
+            System.out.println(b);
         }
 
         System.out.println("\nProgram continues...");
