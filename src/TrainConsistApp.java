@@ -68,17 +68,20 @@ public class TrainConsistApp {
 
         bogieList.sort(Comparator.comparingInt(b -> b.capacity));
 
-        // ===== UC8: Stream Filtering =====
-        System.out.println("\n--- UC8: Filter Bogies (Capacity > 60) ---");
+        // ===== UC8 =====
+        List<Bogie> filteredBogies = bogieList.stream()
+                .filter(b -> b.capacity > 60)
+                .collect(Collectors.toList());
 
-        List<Bogie> filteredBogies = bogieList
-                .stream()                       // convert to stream
-                .filter(b -> b.capacity > 60)  // condition
-                .collect(Collectors.toList()); // collect to list
+        // ===== UC9: Grouping =====
+        System.out.println("\n--- UC9: Group Bogies by Type ---");
 
-        // Display filtered bogies
-        for (Bogie b : filteredBogies) {
-            System.out.println(b);
+        Map<String, List<Bogie>> groupedBogies = bogieList.stream()
+                .collect(Collectors.groupingBy(b -> b.name));
+
+        // Display grouped result
+        for (Map.Entry<String, List<Bogie>> entry : groupedBogies.entrySet()) {
+            System.out.println(entry.getKey() + " -> " + entry.getValue());
         }
 
         System.out.println("\nProgram continues...");
